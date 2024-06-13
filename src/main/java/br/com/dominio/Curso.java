@@ -1,6 +1,6 @@
 package br.com.dominio;
 
-public class Curso extends Conteudo {
+public class Curso extends Conteudo implements Comparable<Curso> {
 
     private int cargaHoraria;
 
@@ -29,5 +29,10 @@ public class Curso extends Conteudo {
                 ", descricao='" + getDescricao() + '\'' +
                 ", cargaHoraria=" + getCargaHoraria() +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Curso o) {
+        return getTitulo().compareTo(o.getTitulo());
     }
 }

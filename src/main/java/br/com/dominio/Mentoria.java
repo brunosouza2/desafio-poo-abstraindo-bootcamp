@@ -2,7 +2,7 @@ package br.com.dominio;
 
 import java.time.LocalDate;
 
-public class Mentoria extends Conteudo {
+public class Mentoria extends Conteudo implements Comparable<Mentoria> {
 
     private LocalDate data;
 
@@ -33,4 +33,8 @@ public class Mentoria extends Conteudo {
                 '}';
     }
 
+    @Override
+    public int compareTo(Mentoria o) {
+        return getTitulo().compareTo(o.getTitulo());
+    }
 }
