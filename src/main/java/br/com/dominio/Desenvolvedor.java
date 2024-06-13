@@ -2,13 +2,14 @@ package br.com.dominio;
 
 import br.com.dominio.exception.DesenvolvedorNaoMatriculadoEmConteudoException;
 
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
-public class Desenvolvedor {
+public class Desenvolvedor implements Comparable<Desenvolvedor> {
 
     private String nome;
     private Set<Conteudo> conteudosInscritos;
@@ -78,5 +79,10 @@ public class Desenvolvedor {
                 ", conteudosInscritos=" + conteudosInscritos +
                 ", conteudosConcluidos=" + conteudosConcluidos +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Desenvolvedor o) {
+        return this.getNome().compareTo(o.getNome());
     }
 }
