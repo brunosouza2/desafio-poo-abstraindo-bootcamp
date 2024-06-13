@@ -35,7 +35,9 @@ public class Desenvolvedor {
         return conteudosConcluidos.stream().collect(toUnmodifiableSet());
     }
 
-    public void inscreverBootcamp(Bootcamp bootcamp) {}
+    public void inscreverBootcamp(Bootcamp bootcamp) {
+        this.conteudosInscritos.addAll(bootcamp.getConteudos());
+    }
 
     public void progredir() {}
 
