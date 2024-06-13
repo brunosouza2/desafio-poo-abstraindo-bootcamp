@@ -1,10 +1,7 @@
 package br.com.dominio;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
@@ -65,6 +62,10 @@ public class Bootcamp {
 
     public void inscreverDesenvolvedor(Desenvolvedor desenvolvedor) {
         this.desenvolvedoresInscritos.add(desenvolvedor);
+    }
+
+    public void adicionarConteudos(Conteudo... conteudos){
+        this.conteudos.addAll(Arrays.stream(conteudos).toList());
     }
 
 
