@@ -64,6 +64,10 @@ public class Bootcamp {
         return conteudos.stream().collect(toUnmodifiableSet());
     }
 
+    public void inscreverDesenvolvedor(Desenvolvedor desenvolvedor) {
+        this.desenvolvedoresInscritos.add(desenvolvedor);
+    }
+
 
     @Override
     public boolean equals(Object o) {

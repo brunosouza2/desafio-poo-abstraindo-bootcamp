@@ -1,9 +1,10 @@
 package br.com.dominio;
 
+import br.com.dominio.exception.DesenvolvedorNaoMatriculadoEmConteudoException;
+
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
@@ -37,11 +38,26 @@ public class Desenvolvedor {
 
     public void inscreverBootcamp(Bootcamp bootcamp) {
         this.conteudosInscritos.addAll(bootcamp.getConteudos());
+        bootcamp.inscreverDesenvolvedor(this);
     }
 
-    public void progredir() {}
+    public void progredir() {
+        // 1- O desenvolvedor deve concluir um conteúdo antes de ir para o proximo
+        this.conteudosInscritos.stream()
+                .findFirst()
+                .ifPresentOrElse(this::atualizaProgresso, DesenvolvedorNaoMatriculadoEmConteudoException::new);
+    }
 
-    public void calcularTotalXp() {}
+    public double calcularTotalXp() {
+        return this.conteudosConcluidos.stream()
+                .mapToDouble(Conteudo::calcularXp)
+                .sum();
+    }
+
+    private void atualizaProgresso(Conteudo conteudo) {
+        this.conteudosConcluidos.add(conteudo);
+        this.conteudosInscritos.remove(conteudo);
+    }
 
     @Override
     public boolean equals(Object o) {
