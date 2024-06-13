@@ -41,6 +41,27 @@ class BootcampTest {
         assertArrayEquals(collectionEsperada, desenvolvedoresEscritos);
     }
 
+    @Test
+    @DisplayName("Deve adicionar novos conteúdos no bootcamp")
+    void deveAdicionarDiversosConteudosAoBootcamp() {
+        var curso = new Curso("Especialista Angular", "Frontend com Angular",
+                30);
+        var segundoCurso = new Curso("Especialista Java", "Backend com java", 20);
+
+        Conteudo[] conteudosEsperados = new Conteudo[] {
+               curso, segundoCurso
+        };
+
+        bootcamp.adicionarConteudos(curso, segundoCurso);
+
+        Conteudo[] conteudoCurso = bootcamp.getConteudos().stream()
+                .sorted()
+                .toList()
+                .toArray(new Conteudo[0]);
+
+        assertArrayEquals(conteudosEsperados, conteudoCurso);
+    }
+
 
 
 }
