@@ -1,0 +1,96 @@
+@startuml
+class br.com.dominio.Mentoria {
+- LocalDate data
++ LocalDate getData()
++ void setData(LocalDate)
++ double calcularXp()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
++ int compareTo(Mentoria)
+}
+
+
+abstract class br.com.dominio.Conteudo {
+# {static} double XP_PADRAO
+- String titulo
+- String descricao
++ String getTitulo()
++ void setTitulo(String)
++ String getDescricao()
++ void setDescricao(String)
++ {abstract}double calcularXp()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+
+class br.com.dominio.exception.DesenvolvedorNaoMatriculadoEmConteudoException {
+}
+class br.com.dominio.Curso {
+- int cargaHoraria
++ double calcularXp()
++ int getCargaHoraria()
++ void setCargaHoraria(int)
++ boolean equals(Object)
++ int hashCode()
++ String toString()
++ int compareTo(Curso)
+}
+
+
+class br.com.dominio.Desenvolvedor {
+- String nome
+- Set<Conteudo> conteudosInscritos
+- Set<Conteudo> conteudosConcluidos
++ String getNome()
++ void setNome(String)
++ Set<Conteudo> getConteudosInscritos()
++ Set<Conteudo> getConteudosConcluidos()
++ void inscreverBootcamp(Bootcamp)
++ void progredir()
++ double calcularTotalXp()
+- void atualizaProgresso(Conteudo)
++ boolean equals(Object)
++ int hashCode()
++ String toString()
++ int compareTo(Desenvolvedor)
+}
+
+
+class br.com.dominio.Bootcamp {
++ {static} int PRAZO_MINIMO
+- String nome
+- String descricao
+- LocalDate dataInicial
+- LocalDate dataFinal
+- Set<Desenvolvedor> desenvolvedoresInscritos
+- Set<Conteudo> conteudos
++ String getNome()
++ void setNome(String)
++ String getDescricao()
++ void setDescricao(String)
++ LocalDate getDataInicial()
++ void setDataInicial(LocalDate)
++ LocalDate getDataFinal()
++ Set<Desenvolvedor> getDesenvolvedoresInscritos()
++ Set<Conteudo> getConteudos()
++ void inscreverDesenvolvedor(Desenvolvedor)
++ void adicionarConteudos(Conteudo)
++ void adicionarConteudo(Conteudo)
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+
+
+
+br.com.dominio.Comparable <|.. br.com.dominio.Mentoria
+br.com.dominio.Conteudo <|-- br.com.dominio.Mentoria
+br.com.dominio.exception.RuntimeException <|-- br.com.dominio.exception.DesenvolvedorNaoMatriculadoEmConteudoException
+br.com.dominio.Comparable <|.. br.com.dominio.Curso
+br.com.dominio.Conteudo <|-- br.com.dominio.Curso
+br.com.dominio.Comparable <|.. br.com.dominio.Desenvolvedor
+@enduml
