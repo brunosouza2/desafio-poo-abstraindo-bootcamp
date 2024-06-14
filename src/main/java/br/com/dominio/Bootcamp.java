@@ -68,6 +68,10 @@ public class Bootcamp {
         this.conteudos.addAll(Arrays.stream(conteudos).toList());
     }
 
+    public void adicionarConteudo(Conteudo conteudo){
+        this.conteudos.add(conteudo);
+    }
+
 
     @Override
     public boolean equals(Object o) {
