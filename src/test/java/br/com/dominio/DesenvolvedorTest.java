@@ -1,5 +1,6 @@
 package br.com.dominio;
 
+import br.com.dominio.exception.DesenvolvedorNaoMatriculadoEmConteudoException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -65,5 +66,98 @@ class DesenvolvedorTest {
 
     }
 
+    @Nested
+    class Progressao {
 
+        private Conteudo primeiroConteudo;
+        private Conteudo segundoConteudo;
+
+        @BeforeEach
+        public void beforeEach() {
+            primeiroConteudo = new Curso("Javascript Avançado", "Javascript super hiper avançado",
+                    60);
+            segundoConteudo = new Mentoria("Avançando na Carreira Backend Java", "Mentoria Completa",
+                    LocalDate.now());
+
+            bootcamp.adicionarConteudo(primeiroConteudo);
+            bootcamp.adicionarConteudo(segundoConteudo);
+            desenvolvedor.inscreverBootcamp(bootcamp);
+        }
+
+        @Test
+        @DisplayName("Atualiza cursos inscritos e concluídos do usuário")
+        void deveMoverCursoDeInscritoParaConcluido() {
+            Conteudo[] listaCursosInscritosEsperada = new Conteudo[]{
+                    segundoConteudo
+            };
+            Conteudo[] listaCursosConcluidosEsperada = new Conteudo[]{
+                    primeiroConteudo
+            };
+
+            desenvolvedor.progredir();
+
+            Conteudo[] listaCursosInscritos = desenvolvedor.getConteudosInscritos().toArray(new Conteudo[0]);
+            Conteudo[] listaCursosConcluidos = desenvolvedor.getConteudosConcluidos().toArray(new Conteudo[0]);
+
+            assertArrayEquals(listaCursosInscritosEsperada, listaCursosInscritos,
+                    "A lista de cursos inscritos não é a esperada.");
+            assertArrayEquals(listaCursosConcluidosEsperada, listaCursosConcluidos,
+                    "A lista de cursos concluídos não é a esperada.");
+        }
+
+
+        @Test
+        @DisplayName("Lança exceção quando o usuário não está inscrito em nenhum curso.")
+        void lancaExceptionSeNaoHouverCursosInscritos() {
+            var exceptionEsperada = DesenvolvedorNaoMatriculadoEmConteudoException.class;
+
+            desenvolvedor = new Desenvolvedor("Luiz");
+            bootcamp = new Bootcamp("Especialista Angular",
+                    "Angular melhor framework", LocalDate.now());
+            desenvolvedor.inscreverBootcamp(bootcamp);
+
+            assertThrows(exceptionEsperada, () -> desenvolvedor.progredir());
+        }
+    }
+
+    @Nested
+    class XP {
+
+        private Conteudo primeiroConteudo;
+        private Conteudo segundoConteudo;
+
+        @BeforeEach
+        public void beforeEach() {
+            primeiroConteudo = new Curso("Javascript Avançado", "Javascript super hiper avançado",
+                    60);
+            segundoConteudo = new Mentoria("Avançando na Carreira Backend Java", "Mentoria Completa",
+                    LocalDate.now());
+
+            bootcamp.adicionarConteudo(primeiroConteudo);
+            bootcamp.adicionarConteudo(segundoConteudo);
+            desenvolvedor.inscreverBootcamp(bootcamp);
+
+            // Termina primeiro conteúdo
+            desenvolvedor.progredir();
+            // Termina segundo conteúdo
+            desenvolvedor.progredir();
+        }
+
+        @Test
+        @DisplayName("Deve calcular o XP obtido em todos os cursos")
+        void deveCalcularTotalDeXp() {
+            // xp padrão = 10d;
+            // cálculo de xp de curso -> xp * cargaHoraria
+            // cálculo de xp de mentoria -> xp * 20d
+            double xpPrimeiroCurso = primeiroConteudo.calcularXp();
+            double xpSegundoCurso = segundoConteudo.calcularXp();
+            double totalXpEsperado =  xpSegundoCurso + xpPrimeiroCurso;
+
+            double xpTotalDesenvolvedor = desenvolvedor.calcularTotalXp();
+
+            assertEquals(totalXpEsperado, xpTotalDesenvolvedor,
+                    "A quantidade total de XP do desenvolvedor não é a esperada.");
+        }
+
+    }
 }
