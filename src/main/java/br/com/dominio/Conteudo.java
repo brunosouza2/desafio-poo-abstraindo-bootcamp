@@ -1,5 +1,7 @@
 package br.com.dominio;
 
+import java.util.Objects;
+
 public abstract class Conteudo {
 
     protected static final double XP_PADRAO = 10d;
@@ -29,6 +31,18 @@ public abstract class Conteudo {
     }
 
     public abstract double calcularXp();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Conteudo conteudo)) return false;
+        return Objects.equals(getTitulo(), conteudo.getTitulo()) && Objects.equals(getDescricao(), conteudo.getDescricao());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitulo(), getDescricao());
+    }
 
     @Override
     public String toString() {
