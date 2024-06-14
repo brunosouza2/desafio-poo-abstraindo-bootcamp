@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,28 +83,31 @@ class DesenvolvedorTest {
 
             bootcamp.adicionarConteudo(primeiroConteudo);
             bootcamp.adicionarConteudo(segundoConteudo);
+
             desenvolvedor.inscreverBootcamp(bootcamp);
         }
 
         @Test
         @DisplayName("Atualiza cursos inscritos e concluídos do usuário")
         void deveMoverCursoDeInscritoParaConcluido() {
-            Conteudo[] listaCursosInscritosEsperada = new Conteudo[]{
-                    segundoConteudo
-            };
-            Conteudo[] listaCursosConcluidosEsperada = new Conteudo[]{
-                    primeiroConteudo
-            };
+            Conteudo primeiroConteudo = new Curso("Javascript Avançado", "Javascript super hiper avançado", 60);
+            Conteudo segundoConteudo = new Mentoria("Avançando na Carreira Backend Java", "Mentoria Completa", LocalDate.now());
+
+            bootcamp.adicionarConteudo(primeiroConteudo);
+            bootcamp.adicionarConteudo(segundoConteudo);
+            desenvolvedor.inscreverBootcamp(bootcamp);
 
             desenvolvedor.progredir();
 
-            Conteudo[] listaCursosInscritos = desenvolvedor.getConteudosInscritos().toArray(new Conteudo[0]);
-            Conteudo[] listaCursosConcluidos = desenvolvedor.getConteudosConcluidos().toArray(new Conteudo[0]);
+            List<Conteudo> listaCursosInscritos = new ArrayList<>(desenvolvedor.getConteudosInscritos());
+            List<Conteudo> listaCursosConcluidos = new ArrayList<>(desenvolvedor.getConteudosConcluidos());
 
-            assertArrayEquals(listaCursosInscritosEsperada, listaCursosInscritos,
-                    "A lista de cursos inscritos não é a esperada.");
-            assertArrayEquals(listaCursosConcluidosEsperada, listaCursosConcluidos,
-                    "A lista de cursos concluídos não é a esperada.");
+
+            assertEquals(1, listaCursosConcluidos.size(), "Quantidade de cursos concluídos incorreta.");
+            assertEquals(primeiroConteudo, listaCursosConcluidos.get(0), "Primeiro curso concluído incorreto.");
+
+            assertEquals(1, listaCursosInscritos.size(), "Quantidade de cursos inscritos incorreta.");
+            assertEquals(segundoConteudo, listaCursosInscritos.get(0), "Primeiro curso inscrito incorreto.");
         }
 
 
