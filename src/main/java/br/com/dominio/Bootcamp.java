@@ -3,6 +3,7 @@ package br.com.dominio;
 import java.time.LocalDate;
 import java.util.*;
 
+import static java.util.Collections.*;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
 
@@ -57,7 +58,7 @@ public class Bootcamp {
     }
 
     public Set<Conteudo> getConteudos() {
-        return conteudos.stream().collect(toUnmodifiableSet());
+        return unmodifiableSet(this.conteudos);
     }
 
     public void inscreverDesenvolvedor(Desenvolvedor desenvolvedor) {
