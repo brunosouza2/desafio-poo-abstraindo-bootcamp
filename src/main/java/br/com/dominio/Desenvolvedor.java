@@ -43,10 +43,9 @@ public class Desenvolvedor implements Comparable<Desenvolvedor> {
     }
 
     public void progredir() {
-        // 1- O desenvolvedor deve concluir um conteúdo antes de ir para o proximo
         this.conteudosInscritos.stream()
                 .findFirst()
-                .ifPresentOrElse(this::atualizaProgresso, DesenvolvedorNaoMatriculadoEmConteudoException::new);
+                .ifPresentOrElse(this::atualizaProgresso, () -> {throw new DesenvolvedorNaoMatriculadoEmConteudoException();} );
     }
 
     public double calcularTotalXp() {
