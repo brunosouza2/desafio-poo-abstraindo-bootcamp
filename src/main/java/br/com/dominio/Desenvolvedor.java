@@ -43,9 +43,11 @@ public class Desenvolvedor implements Comparable<Desenvolvedor> {
     }
 
     public void progredir() {
-        this.conteudosInscritos.stream()
-                .findFirst()
-                .ifPresentOrElse(this::atualizaProgresso, () -> {throw new DesenvolvedorNaoMatriculadoEmConteudoException();} );
+        if (this.conteudosInscritos.isEmpty()) throw new DesenvolvedorNaoMatriculadoEmConteudoException();
+        for (Conteudo conteudosInscrito : this.conteudosInscritos) {
+            this.atualizaProgresso(conteudosInscrito);
+            break;
+        }
     }
 
     public double calcularTotalXp() {
