@@ -1,7 +1,4 @@
 # Desafio: Abstraindo Bootcamp com POO
-
----
-
 ## Objetivos:
 * Abstrair um domínio de bootcamp modelando suas classes, atributos e métodos.
 * Trabalhar com classes genéricas e específicas.
@@ -20,4 +17,4 @@
 * [Desenvolvedor](https://github.com/brunosouza2/desafio-poo-abstraindo-bootcamp/blob/main/src/test/java/br/com/dominio/DesenvolvedorTest.java)
 
 ## UML
-![]()
+![](https://raw.githubusercontent.com/brunosouza2/desafio-poo-abstraindo-bootcamp/main/assets/bootcamp-uml.png)
